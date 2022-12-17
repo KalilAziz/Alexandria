@@ -1,0 +1,4 @@
+{
+  "extends": "@alexandria-ui/ts-config/base.json",
+  "include": ["src/**/*.ts"],
+}

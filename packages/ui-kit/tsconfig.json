@@ -1,0 +1,14 @@
+{
+  "extends": "@alexandria-ui/ts-config/react.json",
+  "include": [
+    "src/**/*.ts",
+    "src/index.tsx"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve"
+  }
+}
