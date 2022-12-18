@@ -1,10 +1,12 @@
 "use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
@@ -20,6 +22,18 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -32,14 +46,25 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.tsx
 var src_exports = {};
 __export(src_exports, {
-  App: () => App
+  PanelTest: () => PanelTest,
+  SectionPanel: () => SectionPanel
 });
 module.exports = __toCommonJS(src_exports);
+
+// src/components/SectionPanel.tsx
+var import_react_panel_system = __toESM(require("react-panel-system"));
+
+// src/styles/index.ts
+var import_react = require("@stitches/react");
 
 // ../../node_modules/@radix-ui/colors/index.mjs
 var amber$1 = {
@@ -916,7 +941,6 @@ var lineHeights = {
 };
 
 // src/styles/index.ts
-var import_react = require("@stitches/react");
 var {
   config,
   createTheme,
@@ -952,16 +976,85 @@ var darkTheme = createTheme("dark-theme", {
   colors: colorsDark
 });
 
-// src/index.tsx
+// src/components/SectionPanel.tsx
 var import_jsx_runtime = require("react/jsx-runtime");
-var Button = styled("div", {
-  color: "$amber10"
+var Container = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+  height: "90vh",
+  flexGrow: 1,
+  flexBasis: 1,
+  "& > div": {
+    display: "flex",
+    border: "1px solid darkblue",
+    height: "100%",
+    width: "100%"
+  },
+  ".left-edge, .right-edge, .top-edge, .bottom-edge": {
+    backgroundColor: "gray",
+    margin: "auto"
+  },
+  ".left-edge": {
+    height: "40px",
+    width: "3px",
+    borderRadius: " 0 4px 4px 0 "
+  },
+  ".right-edge": {
+    height: "40px",
+    width: "3px",
+    borderRadius: " 4px 0 0 4px "
+  },
+  ".top-edge": {
+    width: "40px",
+    height: "3px",
+    borderRadius: " 0 0 4px 4px "
+  },
+  ".bottom-edge": {
+    width: "40px",
+    height: "3px",
+    borderRadius: "4px 4px 0 0 "
+  }
 });
-var App = () => {
-  console.log(colorsWhite.yellow9);
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, { children: "teste teste" });
+var Root = (_a) => {
+  var _b = _a, { children, height = 80 } = _b, props = __objRest(_b, ["children", "height"]);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Container, { css: { height: `${height}vh` }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    import_react_panel_system.default,
+    __spreadProps(__spreadValues({}, props), {
+      leftEdgeClassName: "left-edge",
+      rightEdgeClassName: "right-edge",
+      topEdgeClassName: "top-edge",
+      bottomEdgeClassName: "bottom-edge",
+      children
+    })
+  ) }) });
+};
+Root.displayName = "Root";
+var Item = styled("div", {
+  display: "flex",
+  flexGrow: 1,
+  overflow: "hidden",
+  img: {
+    width: "100%",
+    height: "auto",
+    objectFit: "cover"
+  }
+});
+var Items = (_a) => {
+  var _b = _a, { children, css: css2 } = _b, props = __objRest(_b, ["children", "css"]);
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react_panel_system.Panel, __spreadProps(__spreadValues({}, props), { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item, { css: css2, children }) }));
+};
+var SectionPanel = {
+  root: Root,
+  items: Items
+};
+
+// src/components/Panel.tsx
+var import_jsx_runtime2 = require("react/jsx-runtime");
+var PanelTest = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", {});
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  App
+  PanelTest,
+  SectionPanel
 });

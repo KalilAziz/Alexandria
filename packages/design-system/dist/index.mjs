@@ -17,6 +17,24 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+
+// src/components/SectionPanel.tsx
+import PanelManager, { Panel } from "react-panel-system";
+
+// src/styles/index.ts
+import { createStitches, defaultThemeMap } from "@stitches/react";
 
 // ../../node_modules/@radix-ui/colors/index.mjs
 var amber$1 = {
@@ -893,7 +911,6 @@ var lineHeights = {
 };
 
 // src/styles/index.ts
-import { createStitches, defaultThemeMap } from "@stitches/react";
 var {
   config,
   createTheme,
@@ -929,15 +946,84 @@ var darkTheme = createTheme("dark-theme", {
   colors: colorsDark
 });
 
-// src/index.tsx
+// src/components/SectionPanel.tsx
 import { jsx } from "react/jsx-runtime";
-var Button = styled("div", {
-  color: "$amber10"
+var Container = styled("div", {
+  display: "flex",
+  flexDirection: "row",
+  height: "90vh",
+  flexGrow: 1,
+  flexBasis: 1,
+  "& > div": {
+    display: "flex",
+    border: "1px solid darkblue",
+    height: "100%",
+    width: "100%"
+  },
+  ".left-edge, .right-edge, .top-edge, .bottom-edge": {
+    backgroundColor: "gray",
+    margin: "auto"
+  },
+  ".left-edge": {
+    height: "40px",
+    width: "3px",
+    borderRadius: " 0 4px 4px 0 "
+  },
+  ".right-edge": {
+    height: "40px",
+    width: "3px",
+    borderRadius: " 4px 0 0 4px "
+  },
+  ".top-edge": {
+    width: "40px",
+    height: "3px",
+    borderRadius: " 0 0 4px 4px "
+  },
+  ".bottom-edge": {
+    width: "40px",
+    height: "3px",
+    borderRadius: "4px 4px 0 0 "
+  }
 });
-var App = () => {
-  console.log(colorsWhite.yellow9);
-  return /* @__PURE__ */ jsx(Button, { children: "teste teste" });
+var Root = (_a) => {
+  var _b = _a, { children, height = 80 } = _b, props = __objRest(_b, ["children", "height"]);
+  return /* @__PURE__ */ jsx(Container, { css: { height: `${height}vh` }, children: /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx(
+    PanelManager,
+    __spreadProps(__spreadValues({}, props), {
+      leftEdgeClassName: "left-edge",
+      rightEdgeClassName: "right-edge",
+      topEdgeClassName: "top-edge",
+      bottomEdgeClassName: "bottom-edge",
+      children
+    })
+  ) }) });
+};
+Root.displayName = "Root";
+var Item = styled("div", {
+  display: "flex",
+  flexGrow: 1,
+  overflow: "hidden",
+  img: {
+    width: "100%",
+    height: "auto",
+    objectFit: "cover"
+  }
+});
+var Items = (_a) => {
+  var _b = _a, { children, css: css2 } = _b, props = __objRest(_b, ["children", "css"]);
+  return /* @__PURE__ */ jsx(Panel, __spreadProps(__spreadValues({}, props), { children: /* @__PURE__ */ jsx(Item, { css: css2, children }) }));
+};
+var SectionPanel = {
+  root: Root,
+  items: Items
+};
+
+// src/components/Panel.tsx
+import { jsx as jsx2 } from "react/jsx-runtime";
+var PanelTest = () => {
+  return /* @__PURE__ */ jsx2("div", {});
 };
 export {
-  App
+  PanelTest,
+  SectionPanel
 };
